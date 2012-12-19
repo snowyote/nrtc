@@ -173,3 +173,9 @@ is set up, so I'll do a commit now and then unwind my stuff a bit.
 
 Well, mocha runs on node, so it's time to set up a node project and
 actually require coffee-script and mocha like a grownup.
+
+Although, do I want to use jasmine-given instead?  Pivotal know what
+they're doing, and it would be nice to build familiarity with Jasmine
+so that I can write front-end tests in it as well..  I'll make this
+decision after I walk the dog!  *curtain*
+
