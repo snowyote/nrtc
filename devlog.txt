@@ -1,0 +1,50 @@
+========== 2012-12-19 ========== realtime chess =========== 10:50:48 ===========
+
+My current problem is that I'm worn out from a few previous positions
+I've held and coding doesn't light me up like it used to.  Although,
+to be fair, I've never really been good about coding on my own time,
+for my own projects - I may write small scripts now and then to
+scratch particular itches (usually solvers for super annoying
+minigames), but never polished projects, which means my skill
+development only happens for 'work stuff'.  And, since I'm a fairly
+reliable and noncomplaining guy, I end being saddled with legacy stuff
+(although I've been lucky enough to have a few green-field projects
+here and there).  So if I want to learn things, especially new tech, I
+have to do it myself.
+
+I'd like to learn Node.js and socket.io, because those let you do cool
+things with webpages that were previously kind of cumbersome.  I am a
+pretty much total stranger to web development, though I've done
+backend web service development in Rails.  I understand Javascript and
+have worked with Coffeescript and jQuery, though the vast majority of
+my professional background is in C/C++ game development.  So, this
+would be new and fun for me!
+
+I recently saw a video of "Kung Fu Chess", which is a variant of chess
+in which there aren't turns.  You can move any piece at any time
+(modulo a cooldown).  It looked fascinating and fun and it seemed like
+a straightforward thing to up-and-clone (maybe I'll modify the rules
+later, but it seems like a good basic starting point for a game).
+
+So, what do I start with?
+
+First things first, I'm going to need a 'playable' single-player local
+javascript version of chess.  Once that's done, I can worry about
+hooking up the moves to socket.io events, and once that's done I can
+worry about allocating games / keeping track of persistent scores /
+all that metagamey crap.  But first I need a board, and I need to be
+able to move pieces around on it.
+
+well, first I need a git repo.  So, here we go!
+
+bash-3.2$ pwd
+/Users/ben
+bash-3.2$ git init nrtc
+Initialized empty Git repository in /Users/ben/nrtc/.git/
+bash-3.2$ cd nrtc
+bash-3.2$ git add -A devlog.txt 
+bash-3.2$ git commit -m 'initial commit'
+[master (root-commit) b3c62f7] initial commit
+ 1 file changed, 44 insertions(+)
+ create mode 100644 devlog.txt
+bash-3.2$ 
