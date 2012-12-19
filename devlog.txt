@@ -67,4 +67,80 @@ right?) so that I can use script type text/coffee directly in html.
 
 Ooh, thanks CDNJS!
 
+=========== 2012-12-19 ============ modeling ============ 11:16:47 =============
+
+Frankly, I don't really understand the object model for CoffeeScript,
+but I'm going to outline what I think the rough object model should
+be, keeping in mind that the game logic should be at least somewhat
+decoupled from the display logic, given that the simulation is at some
+point going to be running on a 'headless' (DOMless really) Node.js
+server.  We've got a Game (a coordinator object), a Board, sixty-four
+Cells, and what like thirty-two Pieces.  Hmm.. is now a good time to
+try that CRC stuff I read about?
+http://en.wikipedia.org/wiki/Class-responsibility-collaboration_card
+
+It might not be a bad idea, especially since my initial pass totally
+failed to separate display from logic ;P
+
+Game
+Root of the simulation, observes victory conditions
+Player, Board
+
+Player
+An object that issues moves, can win or lose
+Game, Board, Piece
+
+Board
+contains Piece positions, applies moves
+Piece, Cell, Move
+
+Location
+a two dimensional vector that a Piece can be at
+
+Cell
+an integral Location that a non-moving in-play Piece can be at
+Piece
+
+Piece
+a game piece, owned by a Player, that can move, has a Cooldown
+Player
+
+Cooldown
+a timer that determines when a Piece can move again.
+*
+
+Move
+a record-type. pair of Cells, indicates a Move a Piece might make
+Piece, Board (to check for validity)
+
+DisplayGame
+observes Game, alerts when you win/lose
+Game, DOM
+
+DisplayBoard
+observes the Board, which doesn't change much
+Board, DOM
+
+DisplayPiece
+observes a Piece, animates between cells
+Piece, DOM
+
+allright, that's a first pass.  Couple issues though:
+
+* As someone with game development experience, I know latency is going
+  to mess stuff up for real-time play.  I'd like to get a GGPO-style
+  simulation system in here, and this isn't on the CRC.
+
+* How does a human Player submit Moves to the Game?
+
+for the first one, I'm going to punt for now, just keeping in mind
+that I'll probably need to lock framerate and keep a buffer of
+simulation states that I can jump back to and resimulate from.  GGPO
+is an implementation of an interesting networking model that you can
+read more about at GGPO.net.  I'm just going to half-ass it.
+
+For the second one - well, the Player -is- the object that submits
+moves.  I will probably derive LocalPlayer and RemotePlayer from
+Player, and LocalPlayer will be responsible for coordinating with
+DisplayBoard to get clicks and submit moves.
 
