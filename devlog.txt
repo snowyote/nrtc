@@ -16,7 +16,7 @@ I'd like to learn Node.js and socket.io, because those let you do cool
 things with webpages that were previously kind of cumbersome.  I am a
 pretty much total stranger to web development, though I've done
 backend web service development in Rails.  I understand Javascript and
-have worked with Coffeescript and jQuery, though the vast majority of
+have worked with CoffeeScript and jQuery, though the vast majority of
 my professional background is in C/C++ game development.  So, this
 would be new and fun for me!
 
@@ -44,7 +44,27 @@ Initialized empty Git repository in /Users/ben/nrtc/.git/
 bash-3.2$ cd nrtc
 bash-3.2$ git add -A devlog.txt 
 bash-3.2$ git commit -m 'initial commit'
-[master (root-commit) b3c62f7] initial commit
+[master (root-commit) REDACTED] initial commit
  1 file changed, 44 insertions(+)
  create mode 100644 devlog.txt
 bash-3.2$ 
+
+Yeah, I guess I don't need to be that verbose.  Step one!  Complete!
+
+=========== 2012-12-19 =========== framework ============ 11:06:28 =============
+
+So to prototype the game board and pieces, I'm going to make a little
+skeletal html page that contains nothing but the board, sets up the
+initial piece layout, and lets me move them around.  I'm going to use
+CoffeeScript for this, because I like the language and I want to gain
+more fluency with it.  I know that in the node project, there is some
+kinda thing you can do so that .coffee will be automatically compiled
+to .js and cached and cool things like that, but that's yak-shaving at
+this point.  I don't need performance right now, and I certainly don't
+need to set up a node project, so let's just make a little HTML file
+that pulls CoffeeScript from a CDN (gotta be out there somewhere,
+right?) so that I can use script type text/coffee directly in html.
+
+Ooh, thanks CDNJS!
+
+
