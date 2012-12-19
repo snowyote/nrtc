@@ -96,6 +96,7 @@ Piece, Cell, Move
 
 Location
 a two dimensional vector that a Piece can be at
+*
 
 Cell
 an integral Location that a non-moving in-play Piece can be at
@@ -143,4 +144,28 @@ For the second one - well, the Player -is- the object that submits
 moves.  I will probably derive LocalPlayer and RemotePlayer from
 Player, and LocalPlayer will be responsible for coordinating with
 DisplayBoard to get clicks and submit moves.
+
+======== 2012-12-19 ======== ok so make some files? ========= 11:42:16 =========
+
+Allright, I know that in node all these modules are hidden from each
+other and I don't know how you make modules that span multiple files
+but for the moment, I don't really care, I'll change it later.  I also
+don't need to google around for coffeescript file-naming conventions
+right now either, I'll just use the lowercase version of the
+classname.  (Keeping a running diary is awesome for preventing
+yak-shaving, by the way, it becomes really obvious when I'm going down
+a rathole and I become embarassed to.  Perhaps I should do this ALL
+THE TIME?)
+
+So!  Let's make a bunch of files for all the classes and start filling
+'em out.
+
+========== 2012-12-19 ========== oh crap tests =========== 11:47:18 ============
+
+Yeah, I always forget this... tests are important.  It's easy to
+dismiss this as yak-shaving but there really isn't an excuse for not
+being a grownup here.  I remember hearing something about mocha, which
+is a testing framework for javascript, so it's time to google that up
+and do a little reading.  This will probably influence how my project
+is set up, so I'll do a commit now and then unwind my stuff a bit.
 
