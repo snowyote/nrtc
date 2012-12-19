@@ -1,0 +1,10 @@
+{
+  "name": "nrtc",
+  "description": "Node Realtime Chess",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "coffee-script": "1.4.x",
+    "mocha": "1.7.x"
+  }
+}

@@ -169,3 +169,7 @@ is a testing framework for javascript, so it's time to google that up
 and do a little reading.  This will probably influence how my project
 is set up, so I'll do a commit now and then unwind my stuff a bit.
 
+======= 2012-12-19 ======= allright, time to grow up ======== 11:53:27 =========
+
+Well, mocha runs on node, so it's time to set up a node project and
+actually require coffee-script and mocha like a grownup.
