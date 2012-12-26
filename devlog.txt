@@ -179,3 +179,9 @@ they're doing, and it would be nice to build familiarity with Jasmine
 so that I can write front-end tests in it as well..  I'll make this
 decision after I walk the dog!  *curtain*
 
+======= 2012-12-26 ======== or go home for christmas ======== 15:09:48 =========
+
+Stuck in the airport.  I guess I'm gonna go with mocha because I have
+no internet, and that's what I've got installed in node_modules right
+now.  Start with a fresh slate, stub classes are junk.
+
