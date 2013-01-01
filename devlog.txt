@@ -283,3 +283,27 @@ should actually write location.coffee now.
 
 And .. hey, wow, this actually worked.  Cool!  Yay!  Glug
 
+========= 2013-01-01 ========= Okay, now for Cell ========== 11:41:51 ==========
+
+How's this look?
+
+Cell = require '../lib/cell'
+
+describe 'Cell', ->
+  it 'should fail to construct without a Location'
+  it 'should construct with a Location'
+  describe '(unwired)', ->
+    it 'should not be valid'
+    it 'should wire with four arguments'
+  describe '(wired)', ->
+    it 'should be valid'
+    it 'should take them in NEWS order'
+    it 'should return its neighbors'
+  describe '(border)', ->
+    it 'should accept null for a neighbor'
+    it 'should return an invalid cell for a null neighbor'
+
+Looks good.  Okay, and it's working, although I don't understand how
+to do class constants in coffeescript, but hiding the constant
+(INVALID) is probably better anyhow.
+
