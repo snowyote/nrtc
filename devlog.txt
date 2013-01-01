@@ -307,3 +307,17 @@ Looks good.  Okay, and it's working, although I don't understand how
 to do class constants in coffeescript, but hiding the constant
 (INVALID) is probably better anyhow.
 
+=========== 2013-01-01 =========== well okay ============ 12:09:07 =============
+
+Looking at my CRC it looks like I left Piece out of Cell.  Who is
+responsible for
+* keeping track of what pieces are where? Cell
+* validating moves? Board
+* capturing pieces out of play? Game
+
+How should I get from a Piece to its Cell so I can validate moves?
+Well, Board validates moves, it has the Cells, so that's okay.
+
+Oop, INVALID should be chainable as well, let's add a test for that.
+
+Allright, let's add piece.

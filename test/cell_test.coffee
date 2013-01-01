@@ -12,6 +12,8 @@ describe 'Cell', ->
       instance.valid.should.not.be.ok
     it 'should wire with four arguments', ->
       expect(-> instance.wire('n', 'e', 'w', 's')).to.not.throw()
+    it 'should have a null .piece', ->
+      expect(instance.piece).to.equal null
   describe '(wired)', ->
     instance = null
     beforeEach ->
@@ -33,3 +35,8 @@ describe 'Cell', ->
       instance.valid.should.be.ok
     it 'should return an invalid cell for a null neighbor', ->
       instance.s.valid.should.not.be.ok
+    it 'should return an invalid cell after going further off the board', ->
+      instance.s.s.valid.should.not.be.ok
+    it 'should return an invalid cell after hopping off-and-on the board', ->
+      instance.s.n.valid.should.not.be.ok
+
