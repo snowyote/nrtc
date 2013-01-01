@@ -1,1 +1,1 @@
-exports = class Piece
+module.exports = class Piece

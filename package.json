@@ -3,8 +3,14 @@
   "description": "Node Realtime Chess",
   "version": "0.0.1",
   "private": true,
+  "scripts": {
+    "test": "cake test"
+  },
   "dependencies": {
-    "coffee-script": "1.4.x",
-    "mocha": "1.7.x"
+    "coffee-script": "1.4.x"
+  },
+  "devDependencies": {
+    "mocha": "1.7.x",
+    "chai": "1.4.x"
   }
 }

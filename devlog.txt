@@ -185,3 +185,53 @@ Stuck in the airport.  I guess I'm gonna go with mocha because I have
 no internet, and that's what I've got installed in node_modules right
 now.  Start with a fresh slate, stub classes are junk.
 
+========== 2013-01-01 ========== happy new year =========== 10:08:42 ===========
+
+I have to get into the habit of at least working on this every day,
+even if I don't make spectacular progress.  Disruptions are gone, at
+least.  Let's take a look at mocha.
+
+In lieu of 'bundle exec bash', I can at least go to the project dir
+and do:
+
+bash-3.2$ export PATH=$(PWD)/node_modules/.bin:$PATH
+bash-3.2$ which mocha
+/Users/ben/nrtc/node_modules/.bin/mocha
+
+Well, right off the bat, I learn I can't test coffeescript.  Maybe I
+should write test/test.js to glob all the coffee and load/run it.
+
+I'll go by this:
+http://danneu.com/posts/14-setting-up-mocha-testing-with-coffeescript-node-js-and-a-cakefile
+
+and also this:
+http://net.tutsplus.com/tutorials/javascript-ajax/better-coffeescript-testing-with-mocha/
+
+============ 2013-01-01 ============= hrm ============== 10:44:24 ==============
+
+Starting to gain a little fluency with mocha and chai, in that I can do
+
+    "something".should.equal "something"
+    "something".should.not.equal "something else"
+
+but the stub class I've defined for Board doesn't seem to work like I
+expect.  I'll try to find out if it's a problem with my require or
+something else.
+
+Okay, if I define the class directly in the test file, it works.
+There's a problem somewhere between my export from board.coffee and my
+require.  Right now I've got
+
+  # lib/board.coffee
+  exports = class Board
+  
+  # test/board_test.coffee
+  Board = require '../lib/board'
+
+and then Board appears to be {} inside board_test.coffee.  Time to
+look at some other coffeescript projects to see how they export
+classes?
+
+...
+
+embarassingly enough, I wanted module.exports, not bare exports.

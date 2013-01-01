@@ -1,1 +1,1 @@
-exports = class DisplayGame
+module.exports = class DisplayGame

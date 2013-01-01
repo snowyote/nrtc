@@ -1,1 +1,1 @@
-exports = class Location
+module.exports = class Location

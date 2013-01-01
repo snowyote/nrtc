@@ -1,1 +1,1 @@
-exports = class Move
+module.exports = class Move

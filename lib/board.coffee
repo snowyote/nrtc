@@ -1,1 +1,1 @@
-exports = class Board
+module.exports = class Board

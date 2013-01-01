@@ -1,1 +1,1 @@
-exports = class DisplayPiece
+module.exports = class DisplayPiece

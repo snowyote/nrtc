@@ -1,1 +1,1 @@
-exports = class Cell
+module.exports = class Cell

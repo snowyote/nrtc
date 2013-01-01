@@ -1,1 +1,1 @@
-exports = class Cooldown
+module.exports = class Cooldown
