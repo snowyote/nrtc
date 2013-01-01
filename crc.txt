@@ -1,0 +1,43 @@
+Game - lib/game.coffee, test/game_test.coffee
+Root of the simulation, observes victory conditions
+Player, Board
+
+Player - lib/player.coffee, test/player_test.coffee
+An object that issues moves, can win or lose
+Game, Board, Piece
+
+Board - lib/board.coffee, test/board_test.coffee
+contains Piece positions, applies moves
+Piece, Cell, Move
+
+Location - lib/location.coffee, test/location_test.coffee
+a two dimensional vector that a Piece can be at
+*
+
+Cell - lib/cell.coffee, test/cell_test.coffee
+an integral Location that a non-moving in-play Piece can be at
+Piece
+
+Piece - lib/piece.coffee, test/piece_test.coffee
+a game piece, owned by a Player, that can move, has a Cooldown
+Player
+
+Cooldown - lib/cooldown.coffee, test/cooldown_test.coffee
+a timer that determines when a Piece can move again.
+*
+
+Move - lib/move.coffee, test/move_test.coffee
+a record-type. pair of Cells, indicates a Move a Piece might make
+Piece, Board (to check for validity)
+
+DisplayGame - lib/displaygame.coffee, test/displaygame_test.coffee
+observes Game, alerts when you win/lose
+Game, DOM
+
+DisplayBoard - lib/displayboard.coffee, test/displayboard_test.coffee
+observes the Board, which doesn't change much
+Board, DOM
+
+DisplayPiece - lib/displaypiece.coffee, test/displaypiece_test.coffee
+observes a Piece, animates between cells
+Piece, DOM

@@ -235,3 +235,51 @@ classes?
 ...
 
 embarassingly enough, I wanted module.exports, not bare exports.
+
+========= 2013-01-01 ========= well allright then ========== 10:53:58 ==========
+
+So, what should I start with?  Let's look at the CRC
+again... actually, since I am probably going to change that and I want
+the log to stay 'the log', let's export it to its own file.
+
+Location seems easy enough to start with.  Let's make a test for it.
+
+Oof, ack, I'm an idiot.  I started writing tests for Cell.  Hold that
+for now.
+
+Okay, I've got some tests for Location but I probably have expect
+syntax wrong:
+
+describe 'Location', ->
+  it 'should not construct without 2 args', ->
+    expect(-> new Location).to.raise_error
+  it 'should construct with 2 args', ->
+    expect(-> new Location(0,0)).not.to.raise_error
+  describe 'instance', ->
+    var instance
+    beforeEach -> instance = new Location(1,2)
+    it 'should return its x-coordinate on .x'
+      instance.x.should.equal 1
+    it 'should return its y-coordinate on .y'
+      instance.y.should.equal 2
+
+Funny note: I just tried to take the java jacket off of an empty
+coffee cup, and it popped out of my hands and across a divider and
+bounced off a dude's head.  Hooray for continuing to be an awkward
+fuckup into 2013 and beyond!
+
+Allright, I can't 'var instance' so maybe 'instance = null'?  Hmm, I
+can't tell if it's using the same 'instance' inside beforeEach and it,
+though.  How do I compile coffeescript to see the js output again...
+
+coffee -p test/location_test.coffee
+
+Well, I'm getting a 'var instance' okay.  BTW, I'm looking at
+https://github.com/visionmedia/express/blob/master/test/Router.js
+for inspiration.
+
+Allright, I get a test failure because x and y are undefined.  I
+should actually write location.coffee now.
+
+And .. hey, wow, this actually worked.  Cool!  Yay!  Glug
+
