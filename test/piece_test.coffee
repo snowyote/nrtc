@@ -1,7 +1,9 @@
 Piece    = require '../lib/piece'
 Cell     = require '../lib/cell'
-Location = require '../lib/cell'
-  
+Location = require '../lib/location'
+Move     = require '../lib/move'
+_        = require 'underscore'
+
 describe 'Piece', ->
   it 'should be abstract', ->
     expect(-> new Piece).to.throw()
@@ -42,3 +44,11 @@ describe 'TestPiece', ->
       instance.destinations(b).should.include c
       instance.destinations(c).should.include b
 
+    check_moves = (l, r) ->
+      l.length.should.equal r.length
+      lm.from.should.equal(rm.from) and lm.to.should.equal(rm.to) for [lm, rm] in _.zip l, r
+
+    it 'should have moves', ->
+      check_moves instance.moves(a), [new Move(a, b)]
+      check_moves instance.moves(b), [new Move(b, a), new Move(b, c)]
+      check_moves instance.moves(c), [new Move(c, b)]

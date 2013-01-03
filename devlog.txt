@@ -346,4 +346,11 @@ test when you update test/* or lib/*.
 
 Bleh, stuck at 'moves'.  I should implement these before Piece.
 
+============ 2013-01-03 ============= hmm ============== 09:10:56 ==============
+
+I'm getting 'ReferenceError: Move is not defined'.  ah, I see, not in
+the test, in piece.coffee.
+
+Well, okay, cool, now Pieces work.  But I'm getting the feeling I'm
+building this a little too bottom-up.
 

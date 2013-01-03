@@ -1,4 +1,5 @@
 Location = require './location'
+Move     = require './move'
 
 module.exports = class Piece
   constructor: ->
@@ -13,4 +14,6 @@ module.exports = class Piece
 
   remove_from_play: ->
     @location = null
-    
+
+  moves: (from) ->
+    new Move(from, to) for to in @destinations(from) when to.valid
