@@ -12,4 +12,7 @@ describe 'Location', ->
       instance.x.should.equal 1
     it 'should return its y-coordinate on .y', ->
       instance.y.should.equal 2
-
+    it 'should assign', ->
+      instance.gets(new Location(3,4))
+      instance.x.should.equal 3
+      instance.y.should.equal 4
