@@ -321,3 +321,29 @@ Well, Board validates moves, it has the Cells, so that's okay.
 Oop, INVALID should be chainable as well, let's add a test for that.
 
 Allright, let's add piece.
+
+============ 2013-01-01 ============= now ============== 12:22:56 ==============
+
+Piece.  It should have a Location (nullable when out of play?) and
+should generate moves from a Cell.
+
+Ugh, I gotta update scruffy-jump to work on node projects instead of
+rails projects.  Maybe make scruffy-jump-matchers a project variable.
+
+Also, I just remembered I have to handle promotion, which is going to
+add more classes.  I need a TODO list.  But I don't want to yakshave
+right now ;( I'll look into org-mode todo shit when I run out of
+brain.
+
+Interesting: a queen can't move through another piece.  But in RTC, if
+you start the move, what happens if it becomes invalid partway through
+the move?  I guess it should still be valid.  But then what happens if
+I move two pieces of the same color onto the same cell, can you
+capture your own piece?  WHY NOT!!!!  cool bro
+
+I also want to add a test watcher that does a cls() and reruns the
+test when you update test/* or lib/*.
+
+Bleh, stuck at 'moves'.  I should implement these before Piece.
+
+
