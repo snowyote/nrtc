@@ -354,3 +354,22 @@ the test, in piece.coffee.
 Well, okay, cool, now Pieces work.  But I'm getting the feeling I'm
 building this a little too bottom-up.
 
+============ 2013-01-07 ============= okay ============= 08:38:40 ==============
+
+I'm here to agree with myself that I'm building this too bottom-up,
+and that TDD, while it's probably a super cool thing whne you're
+practiced in it, is not my style and I'm having a hard time getting
+velocity.  Part of this is because my class design skills are also not
+super hot (I guess?), I usually don't make a big chart ahead of time
+saying this hooks to that and nothing else, I just start threading
+functionality through stuff.  So I think I have a legit skeleton right
+now and I can start building stuff with it, and I'll just have to try
+to be grownup and pay attention when something is becoming malignant
+and then try to break it up.
+
+I made a little observer class because I -do- want the game objects to
+not have to know about the Display* objects at all, so that's nice.
+
+So, let's consult the CRC and get to the point where we can have
+pieces moving around on the board and stuff.
+
