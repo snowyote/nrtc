@@ -10,6 +10,7 @@ describe 'Piece', ->
 
 # TestPiece can move one square north or south
 class TestPiece extends Piece
+  color: 'beige'
   destinations: (c) ->
     [c.n, c.s]
 

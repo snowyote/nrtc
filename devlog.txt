@@ -373,3 +373,13 @@ not have to know about the Display* objects at all, so that's nice.
 So, let's consult the CRC and get to the point where we can have
 pieces moving around on the board and stuff.
 
+============ 2013-01-14 ============= lame ============= 09:12:24 ==============
+
+A week wasted later... okay, where was I again?
+
+Okay let's at least make all the pieces and generate their moves.
+
+=========== 2013-01-14 ============ not bad ============= 09:50:21 =============
+
+I've encoded all the moves, now I should write tests for them.
+

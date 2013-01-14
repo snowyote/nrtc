@@ -5,6 +5,7 @@ module.exports = class Piece
   constructor: ->
     @location = null
     throw new Error "Please implement destinations" unless @destinations?
+    throw new Error "Please implement color" unless @color?
 
   in_play: ->
     @location?

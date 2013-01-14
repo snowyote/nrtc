@@ -1,0 +1,13 @@
+module.exports =
+  BlackPawn:   require './black_pawn'
+  BlackRook:   require './black_rook'
+  BlackKnight: require './black_knight'
+  BlackBishop: require './black_bishop'
+  BlackQueen:  require './black_queen'
+  BlackKing:   require './black_king'
+  WhitePawn:   require './white_pawn'
+  WhiteRook:   require './white_rook'
+  WhiteKnight: require './white_knight'
+  WhiteBishop: require './white_bishop'
+  WhiteQueen:  require './white_queen'
+  WhiteKing:   require './white_king'
