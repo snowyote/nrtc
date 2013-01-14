@@ -1,4 +1,4 @@
-global.Board = require "./lib/board"
+require "./lib/board"
 require "./lib/cell"
 require "./lib/cooldown"
 require "./lib/displayboard"

@@ -402,4 +402,7 @@ Okay, using browserify, I've got -something-, let's see if it works.
 Well, it doesn't really, I need to export shit to get it to work, or
 write stuff in entry.js.  Let's checkpoint though.
 
+Okay actually I got it working, nice!  I forgot how to use the script
+tag because I'm a javascript professional.  Now to work on display
+stuff.
 
