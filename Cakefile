@@ -13,3 +13,12 @@ task "test", "run tests", ->
   ", (err, output) ->
     throw err if err
     console.log output
+
+task "build", "compile client-side javascript", ->
+#    | ./node_modules/.bin/jsmin
+  exec "./node_modules/.bin/browserify entry.coffee
+    > client.js
+  ",
+    (err, output) ->
+      throw err if err
+      console.log output

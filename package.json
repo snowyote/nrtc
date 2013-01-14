@@ -8,7 +8,9 @@
   },
   "dependencies": {
     "coffee-script": "1.4.x",
-    "underscore": "1.4.x"
+    "underscore": "1.4.x",
+    "browserify": "1.17.x",
+    "jsmin": "1.0.x"
   },
   "devDependencies": {
     "mocha": "1.7.x",

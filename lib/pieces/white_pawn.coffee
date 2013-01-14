@@ -1,6 +1,4 @@
-Pawn = require './pawn'
-
-module.exports = class WhitePawn extends Pawn
+module.exports = class WhitePawn extends Piece
   color: 'white'
   destinations: (c) -> [c.n]
   

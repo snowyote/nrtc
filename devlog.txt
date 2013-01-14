@@ -383,3 +383,23 @@ Okay let's at least make all the pieces and generate their moves.
 
 I've encoded all the moves, now I should write tests for them.
 
+============ 2013-01-14 ============ or not ============= 11:48:37 =============
+
+I'll figure out whether the moves work easier if I get some visual
+feedback.  Now I need to figure out how to get this stuff all running
+in an html page.
+
+Looking at
+http://caolanmcmahon.com/posts/writing_for_node_and_the_browser/
+
+Ugh.
+
+Ooh, waitaminute:
+https://github.com/substack/node-browserify
+
+Okay, using browserify, I've got -something-, let's see if it works.
+
+Well, it doesn't really, I need to export shit to get it to work, or
+write stuff in entry.js.  Let's checkpoint though.
+
+
