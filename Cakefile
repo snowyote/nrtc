@@ -15,7 +15,7 @@ task "test", "run tests", ->
     console.log output
 
 task "build", "compile client-side javascript", ->
-  exec "./node_modules/.bin/browserify entry.coffee
+  exec "./node_modules/.bin/browserify client.coffee
    | ./node_modules/.bin/jsmin
     > client.js
   ",
