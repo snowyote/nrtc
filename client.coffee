@@ -1,2 +1,2 @@
-DisplayBoard = require './lib/displayboard'
-new DisplayBoard(document.getElementById("board"))
+DisplayGame = require './lib/displaygame'
+new DisplayGame(document.getElementById("board"))
