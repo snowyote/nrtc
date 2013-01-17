@@ -411,3 +411,5 @@ stuff.
 Using unicode chara from
 http://en.wikipedia.org/wiki/Chess_symbols_in_Unicode
 
+Actually, using their images, because the alpha is no good
+

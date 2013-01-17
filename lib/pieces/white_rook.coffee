@@ -2,5 +2,5 @@ Rook = require './rook'
 
 module.exports = class WhiteRook extends Rook
   color: 'white'
-  chara: '♖'
+  img: 'img/white_rook.png'
   

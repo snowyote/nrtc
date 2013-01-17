@@ -8,3 +8,6 @@ module.exports = class Renderer
   rect: (x1, y1, x2, y2, style) ->
     @ctx.fillStyle = style
     @ctx.fillRect @screenspace(x1, y1)..., @screenspace(x2, y2)...
+
+  chara: (x, y, c) ->
+    @ctx.fillText c, @screenspace(x, y)...
