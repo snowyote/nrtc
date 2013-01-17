@@ -6,6 +6,9 @@ module.exports = class Renderer
   screenspace: (x, y) ->
     [((x-0.5)*@elt.width)/8, ((y-0.5)*@elt.height)/8]
 
+  boardspace: (x, y) ->
+    [x*8/@elt.width + 0.5, y*8/@elt.height + 0.5]
+
   rect: (x1, y1, x2, y2, style) ->
     @ctx.fillStyle = style
     @ctx.fillRect @screenspace(x1, y1)..., @screenspace(x2, y2)...
@@ -20,3 +23,9 @@ module.exports = class Renderer
       elt.src = url
       # document.body.appendChild elt
       @imgcache[url] = elt
+
+  text: (x, y, str) ->
+    @ctx.fillStyle = '#c00'
+    @ctx.font = 'italic bold 30px sans-serif'
+    @ctx.textBaseline = 'top'
+    @ctx.fillText(str, x, y)
