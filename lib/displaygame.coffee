@@ -1,7 +1,6 @@
 Renderer = require './renderer'
 Game = require './game'
 DisplayBoard = require './displayboard'
-DisplayPiece = require './displaypiece'
 Layouts = require './layouts'
 Pieces = require './pieces'
 Location = require './location'
@@ -11,7 +10,6 @@ module.exports = class DisplayGame
     @game = new Game(Layouts.traditional)
     @renderer = new Renderer(elt)
     @board = new DisplayBoard(@renderer)
-    @pieces = new DisplayPiece(piece) for piece in @game.pieces
     window.setInterval @draw, 66
 
     elt.addEventListener 'mousemove', (evt) =>
