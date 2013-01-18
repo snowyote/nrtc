@@ -9,5 +9,5 @@ module.exports = class Location
     if delta <= distance
       [@x, @y] = [other_location.x, other_location.y]
       return true
-    [@x, @y] = [(distance*dx)/delta, (distance*dy)/delta]
+    [@x, @y] = [@x + (distance*dx)/delta, @y + (distance*dy)/delta]
     return false

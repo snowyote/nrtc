@@ -29,26 +29,26 @@ describe 'Location', ->
     other = null
 
     beforeEach ->
-      instance = new Location(0,0)
-      other = new Location(0,1)
+      instance = new Location(1,1)
+      other = new Location(1,2)
 
     describe 'partway', ->
       rv = null
       beforeEach ->
         rv = instance.move_towards(other, 0.5)
       it 'should move in the direction provided', ->
-        instance.x.should.equal 0
-        instance.y.should.equal 0.5
+        instance.x.should.equal 1
+        instance.y.should.equal 1.5
       it 'should return false', ->
         rv.should.equal false
-      
+
     describe 'exact move', ->
       rv = null
       beforeEach ->
         rv = instance.move_towards(other, 1.0)
       it 'should move in the direction provided', ->
-        instance.x.should.equal 0
-        instance.y.should.equal 1.0
+        instance.x.should.equal 1
+        instance.y.should.equal 2.0
       it 'should return true', ->
         rv.should.equal true
 
@@ -57,7 +57,7 @@ describe 'Location', ->
       beforeEach ->
         rv = instance.move_towards(other, 2.0)
       it 'should stop at the destination', ->
-        instance.x.should.equal 0
-        instance.y.should.equal 1.0
+        instance.x.should.equal 1
+        instance.y.should.equal 2.0
       it 'should return true', ->
         rv.should.equal true
