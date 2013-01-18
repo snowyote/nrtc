@@ -1,5 +1,6 @@
 Location = require './location'
 Move     = require './move'
+_        = require 'underscore'
 
 module.exports = class Piece
   constructor: ->
@@ -18,3 +19,6 @@ module.exports = class Piece
 
   moves: (from) ->
     new Move(from, to) for to in @destinations(from) when to.valid
+
+  valid_move: (move) ->
+    move.to.valid && _.contains @destinations(move.from), move.to

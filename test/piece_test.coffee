@@ -28,7 +28,7 @@ describe 'TestPiece', ->
 
   describe 'instance', ->
     instance = new TestPiece
-      
+
     beforeEach ->
       instance.remove_from_play()
       # clear board
@@ -36,6 +36,7 @@ describe 'TestPiece', ->
 
     it 'should not be in play', ->
       instance.in_play().should.equal false
+
     it 'should have a null location', ->
       expect(instance.location).to.equal null
 
@@ -53,3 +54,9 @@ describe 'TestPiece', ->
       check_moves instance.moves(a), [new Move(a, b)]
       check_moves instance.moves(b), [new Move(b, a), new Move(b, c)]
       check_moves instance.moves(c), [new Move(c, b)]
+
+    describe '#valid_move', ->
+      it 'should validate valid moves', ->
+        instance.valid_move(new Move(a, b)).should.equal true
+      it 'should not allow invalid moves', ->
+        instance.valid_move(new Move(a, c)).should.equal false
