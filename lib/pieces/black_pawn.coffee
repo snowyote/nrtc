@@ -1,7 +1,6 @@
-Piece = require '../piece'
+Pawn = require './pawn'
 
-module.exports = class BlackPawn extends Piece
+module.exports = class BlackPawn extends Pawn
   color: 'black'
-  destinations: (c) -> [c.s]
+  primary_direction: 's'
   img: 'img/black_pawn.png'
-  
