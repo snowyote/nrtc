@@ -14,12 +14,14 @@ module.exports = class Board
         g[x][y].wire(g[x][y-1], g[x+1][y], g[x-1][y], g[x][y+1])
     @grid = g
 
-  at: (x, y) -> @grid[x][y]
+  at: (x, y) ->
+    col = @grid[x]
+    return col? && col[y]
 
   atloc: (loc) -> @at(loc.x, loc.y)
 
   cell_of: (piece) ->
     return null unless piece.in_play()
     cell = @at(piece.location.x, piece.location.y)
-    return null unless cell.piece == piece
+    return null unless cell? && cell.piece == piece
     return cell

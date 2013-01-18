@@ -31,3 +31,7 @@ describe 'Board', ->
       cell = board.at(3,4)
       piece = {location:{x:3,y:4},in_play:->true}
       expect(board.cell_of(piece)).to.equal null
+
+    it 'should not throw if the piece is non-integral location', ->
+      piece = {location:{x:3.14,y:4.8},in_play:->true}
+      expect(-> board.cell_of(piece)).to.not.throw()
