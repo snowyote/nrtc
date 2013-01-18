@@ -32,4 +32,3 @@ module.exports =
     [6, 8, 'WhiteBishop'],
     [7, 8, 'WhiteKnight'],
     [8, 8, 'WhiteRook']]
-  
