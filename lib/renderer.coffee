@@ -13,11 +13,13 @@ module.exports = class Renderer
     @ctx.fillStyle = style
     @ctx.fillRect @screenspace(x1, y1)..., @screenspace(x2, y2)...
 
-  image: (x, y, url) ->
+  image: (x, y, url, alpha=1.0) ->
     img = @imgcache[url]
     if img?
       [x, y] = @screenspace(x, y)
+      @ctx.globalAlpha = alpha
       @ctx.drawImage(img, x-(img.width/2), y-(img.height/2))
+      @ctx.globalAlpha = 1.0
     else
       elt = document.createElement('img');
       elt.src = url

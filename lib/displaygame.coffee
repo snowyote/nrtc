@@ -21,6 +21,11 @@ module.exports = class DisplayGame
       @location = new Location(x, y)
     elt.addEventListener 'mouseout', (evt) =>
       @location = null
+    elt.addEventListener 'mousedown', (evt) =>
+      @draggedpiece = @game.board.atloc(@location).piece
+    elt.addEventListener 'mouseup', (evt) =>
+      @game.move @draggedpiece, @game.board.atloc(@location)
+      @draggedpiece = null
 
   draw: () =>
     @game.tick()                # this should be separated, but
@@ -28,3 +33,11 @@ module.exports = class DisplayGame
     for p in @game.pieces
       if p.in_play()
         @renderer.image p.location.x, p.location.y, p.img
+      unless p?
+        console.log("Got a null p: #{p}")
+      unless @game.board.cell_of(p)?
+        console.log("p is at #{p.location}")
+    if @draggedpiece? && @location?
+      move = {from: @game.board.cell_of(@draggedpiece), to: @game.board.atloc(@location)}
+      if @draggedpiece.valid_move(move)
+        @renderer.image @location.x, @location.y, @draggedpiece.img, 0.5
