@@ -39,4 +39,3 @@ describe 'Cell', ->
       instance.s.s.valid.should.not.be.ok
     it 'should return an invalid cell after hopping off-and-on the board', ->
       instance.s.n.valid.should.not.be.ok
-

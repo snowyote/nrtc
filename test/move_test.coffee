@@ -11,4 +11,3 @@ describe 'Move', ->
     new Move(i, v).valid.should.equal false
     new Move(v, i).valid.should.equal false
     new Move(i, i).valid.should.equal false
-    
