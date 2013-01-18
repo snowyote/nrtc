@@ -10,7 +10,7 @@ module.exports = class DisplayGame
     @game = new Game(Layouts.traditional)
     @renderer = new Renderer(elt)
     @board = new DisplayBoard(@renderer)
-    window.setInterval @draw, 66
+    window.setInterval @draw, 66 #30fps
 
     elt.addEventListener 'mousemove', (evt) =>
       rect = elt.getBoundingClientRect()
@@ -23,9 +23,8 @@ module.exports = class DisplayGame
       @location = null
 
   draw: () =>
+    @game.tick()                # this should be separated, but
     @board.draw()
     for p in @game.pieces
       if p.in_play()
         @renderer.image p.location.x, p.location.y, p.img
-    if @location
-      @renderer.text 0, 0, "Mouse is at #{@location.x}, #{@location.y}"
