@@ -29,6 +29,7 @@ module.exports = class Game
       if cell && piece.valid_move(new Move(cell, destination_cell))
         cell.piece = null
         @active_moves.push [piece, destination_cell]
+        piece.in_initial_location = false
     @queued_moves = []
 
     # continue all moves in flight

@@ -22,3 +22,6 @@ module.exports = class Piece
 
   valid_move: (move) ->
     move.to.valid && _.contains @destinations(move.from), move.to
+
+  # pawns use this <3
+  in_initial_location: true

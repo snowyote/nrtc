@@ -5,7 +5,11 @@ module.exports = class Pawn extends Piece
   destinations: (c) ->
     rv = []
     forward = c[@primary_direction]
-    rv.push forward unless forward.piece?
+    unless forward.piece?
+      rv.push forward
+      if @in_initial_location
+        double_forward = forward[@primary_direction]
+        rv.push double_forward unless double_forward.piece?
     possibly = (c) -> rv.push c if c.piece? && c.piece.color != @color
     possibly forward.e
     possibly forward.w

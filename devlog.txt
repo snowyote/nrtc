@@ -421,3 +421,14 @@ Ugh actually I've been falling behind on tests, and I just wrote one
 that caught a bug, so I gotta do that up.  Plus, I want to have the
 layout object specify the board dimension so that we could do
 different size boards.
+
+============ 2013-01-18 ============= wow ============== 15:44:42 ==============
+
+Okay, good progress.  Got a lot of tests in and I actually have player
+input, movement, capturing, etc.
+
+Couple movement rules I forgot:
+* pawns can move 2 squares to start
+* castling (i don't even know how it works)
+
+OK, got the pawn one.
