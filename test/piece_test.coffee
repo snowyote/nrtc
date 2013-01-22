@@ -27,10 +27,10 @@ describe 'TestPiece', ->
   c.wire(b, null, null, null)
 
   describe 'instance', ->
-    instance = new TestPiece
+    instance = null
 
     beforeEach ->
-      instance.remove_from_play()
+      instance = new TestPiece
       # clear board
       cell.piece = null for cell in [a, b, c]
 
@@ -55,8 +55,17 @@ describe 'TestPiece', ->
       check_moves instance.moves(b), [new Move(b, a), new Move(b, c)]
       check_moves instance.moves(c), [new Move(c, b)]
 
+    it 'should not have moves when it has a cooldown', ->
+      instance.set_cooldown 1
+      check_moves instance.moves(a), []
+      check_moves instance.moves(b), []
+      check_moves instance.moves(c), []
+
     describe '#valid_move', ->
       it 'should validate valid moves', ->
         instance.valid_move(new Move(a, b)).should.equal true
       it 'should not allow invalid moves', ->
         instance.valid_move(new Move(a, c)).should.equal false
+      it 'should not allow moves on cooldown', ->
+        instance.set_cooldown 1
+        instance.valid_move(new Move(a, b)).should.not.be.ok

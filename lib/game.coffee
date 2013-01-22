@@ -4,6 +4,7 @@ Move    = require './move'
 _       = require 'underscore'
 
 VELOCITY = 1.0/30.0                  # cells per tick
+COOLDOWN = 30                        # num ticks
 
 module.exports = class Game
   constructor: (layout) ->
@@ -41,7 +42,11 @@ module.exports = class Game
         captured_piece.remove_from_play() if captured_piece
         destination_cell.piece = piece
         finished_moves.push move
+        piece.set_cooldown COOLDOWN
 
     # clean up @active_moves, if necessary
     if finished_moves.length > 0
       @active_moves = _.difference @active_moves, finished_moves
+
+    # tick all cooldowns
+    piece.tick_cooldown() for piece in @pieces

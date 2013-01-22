@@ -432,3 +432,9 @@ Couple movement rules I forgot:
 * castling (i don't even know how it works)
 
 OK, got the pawn one.
+
+=========== 2013-01-22 ============ hokidoki ============ 09:05:03 =============
+
+Last things I really need are cooldowns and victory conditions and
+then I can start breaking everything apart for the network
+implementation.
