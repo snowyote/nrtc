@@ -37,7 +37,9 @@ module.exports = class DisplayGame
         if p.cooldown?
           h = p.cooldown.fraction_remaining()
           @renderer.rect x-0.5, y-0.5, x+0.5, y+0.5, 'green', h
-    if @draggedpiece? && @location?
+    if @game.victor
+      @renderer.text @renderer.elt.width/2, @renderer.elt.height/2, "#{@game.victor}\nwins!"
+    else if @draggedpiece? && @location?
       move = {from: @game.board.cell_of(@draggedpiece), to: @game.board.atloc(@location)}
       if @draggedpiece.valid_move(move)
         @renderer.image @location.x, @location.y, @draggedpiece.img, 0.5

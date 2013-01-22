@@ -9,12 +9,17 @@ COOLDOWN = 30                        # num ticks
 module.exports = class Game
   constructor: (layout) ->
     @board = new Board()
+
     @pieces = for [x, y, typename] in layout
       type = Pieces[typename]
       piece = new type()
       @board.at(x,y).piece = piece
       piece.move_to(x,y)
       piece
+
+    @essential_pieces = _.where @pieces, {is_essential: true}
+    @victor = null
+
     @queued_moves = []
     @active_moves = []
 
@@ -50,3 +55,9 @@ module.exports = class Game
 
     # tick all cooldowns
     piece.tick_cooldown() for piece in @pieces
+
+    # check victory conditions
+    p = _.find @essential_pieces, (p) -> not p.in_play()
+    if p?
+      @victor = if (p.color == 'black') then 'white' else 'black'
+      @tick = ->
