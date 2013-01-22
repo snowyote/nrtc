@@ -32,11 +32,11 @@ module.exports = class DisplayGame
     @board.draw()
     for p in @game.pieces
       if p.in_play()
-        @renderer.image p.location.x, p.location.y, p.img
-      unless p?
-        console.log("Got a null p: #{p}")
-      unless @game.board.cell_of(p)?
-        console.log("p is at #{p.location}")
+        [x, y] = [p.location.x, p.location.y]
+        @renderer.image x, y, p.img
+        if p.cooldown?
+          h = p.cooldown.fraction_remaining()
+          @renderer.rect x-0.5, y-0.5, x+0.5, y+0.5, 'green', h
     if @draggedpiece? && @location?
       move = {from: @game.board.cell_of(@draggedpiece), to: @game.board.atloc(@location)}
       if @draggedpiece.valid_move(move)

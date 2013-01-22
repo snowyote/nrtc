@@ -9,9 +9,12 @@ module.exports = class Renderer
   boardspace: (x, y) ->
     [x*8/@elt.width + 0.5, y*8/@elt.height + 0.5]
 
-  rect: (x1, y1, x2, y2, style) ->
+  rect: (x1, y1, x2, y2, style, alpha=1.0) ->
+    @ctx.globalAlpha = alpha
     @ctx.fillStyle = style
-    @ctx.fillRect @screenspace(x1, y1)..., @screenspace(x2, y2)...
+    [ulx, uly] = @screenspace(x1, y1)
+    [lrx, lry] = @screenspace(x2, y2)
+    @ctx.fillRect ulx, uly, lrx-ulx, lry-uly
 
   image: (x, y, url, alpha=1.0) ->
     img = @imgcache[url]
@@ -19,7 +22,6 @@ module.exports = class Renderer
       [x, y] = @screenspace(x, y)
       @ctx.globalAlpha = alpha
       @ctx.drawImage(img, x-(img.width/2), y-(img.height/2))
-      @ctx.globalAlpha = 1.0
     else
       elt = document.createElement('img');
       elt.src = url
@@ -27,6 +29,7 @@ module.exports = class Renderer
       @imgcache[url] = elt
 
   text: (x, y, str) ->
+    @ctx.globalAlpha = 1.0
     @ctx.fillStyle = '#c00'
     @ctx.font = 'italic bold 30px sans-serif'
     @ctx.textBaseline = 'top'
