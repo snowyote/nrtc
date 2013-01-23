@@ -438,3 +438,17 @@ OK, got the pawn one.
 Last things I really need are cooldowns and victory conditions and
 then I can start breaking everything apart for the network
 implementation.
+
+============ 2013-01-22 ============= okay ============= 09:55:49 ==============
+
+So I have cooldown and victory condition.  I'm not perfectly happy
+with the way the cooldown is implemented because it's mutation-heavy,
+but it works.  I think what I want to do is now pull all of the state
+out the pieces and the board, so that the pieces are essentially just
+maps of functions for generating moves given cells.  Then the state
+map is basically a structure that looks like the initial layout plus
+(cooldown || move information) and a link to the previous state.
+
+Though, actually, this would get complex, having variant data
+structures using array locations... I should refactor layouts to use
+objects, instead.

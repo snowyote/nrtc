@@ -4,7 +4,7 @@ Move    = require './move'
 _       = require 'underscore'
 
 VELOCITY = 1.0/30.0                  # cells per tick
-COOLDOWN = 30                        # num ticks
+COOLDOWN = 30*3                      # num ticks
 
 module.exports = class Game
   constructor: (layout) ->
