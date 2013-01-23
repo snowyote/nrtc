@@ -1,7 +1,7 @@
 Game     = require '../lib/game'
 Location = require '../lib/location'
 
-TEST_LAYOUT = [[1, 1, 'BlackRook']]
+TEST_LAYOUT = [{type: 'BlackRook', location: [1, 1]}]
 
 describe 'Game', ->
   instance = null
