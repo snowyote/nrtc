@@ -10,7 +10,8 @@ module.exports = class Game
   constructor: (layout) ->
     @board = new Board()
 
-    @pieces = for [x, y, typename] in layout
+    # omg destructuring-bind... omg...
+    @pieces = for {type: typename, location: [x, y]} in layout
       type = Pieces[typename]
       piece = new type()
       @board.at(x,y).piece = piece
