@@ -26,12 +26,13 @@ module.exports = class Piece
     @location = null
 
   moves: (from) ->
-    return [] if @cooldown
-    new Move(from, to) for to in @destinations(from) when to.valid
+    new Move(from, to) for to in @destinations(from) when @valid_destination to
+
+  valid_destination: (dest) ->
+    (not @cooldown?) && dest.valid && (not dest.piece? or dest.piece.color != @color)
 
   valid_move: (move) ->
-    return false if @cooldown
-    move.to.valid && _.contains @destinations(move.from), move.to
+    return @valid_destination(move.to) && _.contains @destinations(move.from), move.to
 
   # pawns use this <3
   in_initial_location: true
