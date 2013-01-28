@@ -499,3 +499,9 @@ a pre-commit hook in git, I have to figure out why mocha is returning
 Allright, got it working, but I'm unhappy with my liberal use of
 _.clone.  that's another @TODO.  I probably want a serialization
 protocol that handles nulls correctly.
+
+========== 2013-01-28 =========== network time =========== 11:26:03 ============
+
+So at this point, I think it's time to fill out Player, but its design
+is going to depend a bit on Socket.IO, so I'll do a little digging
+there first.
