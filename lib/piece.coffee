@@ -36,3 +36,11 @@ module.exports = class Piece
 
   # pawns use this <3
   in_initial_location: true
+
+  create_state: ->
+    [_.clone @location, @in_initial_location, _.clone @cooldown]
+
+  restore_from_state: (state) ->
+    @location = _.clone state[0]
+    @in_initial_location = state[1]
+    @cooldown = _.clone state[2]

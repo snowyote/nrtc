@@ -20,10 +20,11 @@ module.exports = class Game
 
     @essential_pieces = _.where @pieces, {is_essential: true}
     @victor = null
-
-    @current_tick = 0
-    @move_history = []
     @active_moves = []
+
+    @stalest_move = @current_tick = 0
+    @move_history = []
+    @states = []
 
   move: (piece, destination_cell, tick = @current_tick) ->
     movelist = (@move_history[tick] ? [])
@@ -36,13 +37,27 @@ module.exports = class Game
     @stalest_move = Math.min @stalest_move, tick
 
   tick: ->
+    target_tick = @current_tick + 1
+    if @stalest_move < @current_tick
+      @restore_from_state @states[@stalest_move]
+      @current_tick = @stalest_move
+
+    while @current_tick < target_tick
+      @states[@current_tick] = @create_state()
+      @simulate()
+      @current_tick += 1
+
+    @stalest_move = @current_tick
+
+  simulate: ->
     # start all queued moves
-    for [piece, destination_cell] in @move_history[@current_tick]
-      cell = @board.cell_of(piece)
-      if cell && piece.valid_move(new Move(cell, destination_cell))
-        cell.piece = null
-        @active_moves.push [piece, destination_cell]
-        piece.in_initial_location = false
+    if @move_history[@current_tick]
+      for [piece, destination_cell] in @move_history[@current_tick]
+        cell = @board.cell_of(piece)
+        if cell && piece.valid_move(new Move(cell, destination_cell))
+          cell.piece = null
+          @active_moves.push [piece, destination_cell]
+          piece.in_initial_location = false
 
     # continue all moves in flight
     finished_moves = []
@@ -66,11 +81,6 @@ module.exports = class Game
     p = _.find @essential_pieces, (p) -> not p.in_play()
     if p?
       @victor = if (p.color == 'black') then 'white' else 'black'
-      @tick = ->
-
-    # advance time
-    @stalest_move = @current_tick
-    @current_tick += 1
 
   create_state: ->
     victor: @victor
@@ -78,20 +88,18 @@ module.exports = class Game
     current_tick: @current_tick
     cells: for x in [0...8]
       for y in [0...8]
-        c = @at(x, y)
+        c = @board.at(x+1, y+1)
         if c.piece then _.indexOf @pieces, c.piece else null
-    pieces: for p in @pieces
-      [p.location, p.in_initial_location, p.cooldown]
+    pieces: p.create_state() for p in @pieces
 
   restore_from_state: (state) ->
     @victor = state.victor
-    @active_moves = state.active_moves
+    @active_moves = _.map state.active_moves, _.clone
     @current_tick = state.current_tick
     for x in [0...8]
       for y in [0...8]
-        c = @at(x, y)
+        c = @board.at(x+1, y+1)
         sc = state.cells[x][y]
         c.piece = if sc? then @pieces[sc] else null
     for pi in [0...state.pieces.length]
-      p = @pieces[pi]
-      [p.location, p.in_initial_location, p.cooldown] = state.pieces[pi]
+      @pieces[pi].restore_from_state state.pieces[pi]

@@ -43,3 +43,16 @@ describe 'Game', ->
       instance.move rook, dest
       instance.tick()
       instance.active_moves.should.deep.equal []
+
+    it 'should rewind when old moves have arrived', ->
+      instance.tick()
+
+      instance.move rook, instance.board.at(8, 1)
+      instance.tick()
+      instance.current_tick.should.equal 2
+      instance.active_moves.should.deep.equal [[rook, instance.board.at(8, 1)]]
+
+      instance.move rook, instance.board.at(1, 8), 0
+      instance.tick()
+      instance.current_tick.should.equal 3
+      instance.active_moves.should.deep.equal [[rook, instance.board.at(1, 8)]]

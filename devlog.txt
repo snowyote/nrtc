@@ -487,3 +487,15 @@ that's it.
 
 Okay, so now we have a move queue... let's order it and get that out
 of the way.
+
+Nice, I have restore... but no tests.  Okay, this definitely requires
+a test.
+
+Good that I wrote one because I have a lot of bugs!!! Also, @TODO:
+cooldown isn't serializing correctly.  Another @TODO: run the tests as
+a pre-commit hook in git, I have to figure out why mocha is returning
+0 if there are failures but after that it should work.
+
+Allright, got it working, but I'm unhappy with my liberal use of
+_.clone.  that's another @TODO.  I probably want a serialization
+protocol that handles nulls correctly.
