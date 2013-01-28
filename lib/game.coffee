@@ -21,23 +21,23 @@ module.exports = class Game
     @essential_pieces = _.where @pieces, {is_essential: true}
     @victor = null
 
-    @queued_moves = []
+    @current_tick = 0
+    @move_history = []
     @active_moves = []
 
-  move: (piece, destination_cell) ->
-    cell = @board.cell_of(piece)
-    if cell && piece.valid_move(new Move(cell, destination_cell))
-      @queued_moves.push [piece, destination_cell]
+  move: (piece, destination_cell, tick = @current_tick) ->
+    # @TODO strict total order
+    (@move_history[tick] ?= []).push [piece, destination_cell]
+    @stalest_move = Math.min @stalest_move, tick
 
   tick: ->
     # start all queued moves
-    for [piece, destination_cell] in @queued_moves
+    for [piece, destination_cell] in @move_history[@current_tick]
       cell = @board.cell_of(piece)
       if cell && piece.valid_move(new Move(cell, destination_cell))
         cell.piece = null
         @active_moves.push [piece, destination_cell]
         piece.in_initial_location = false
-    @queued_moves = []
 
     # continue all moves in flight
     finished_moves = []
@@ -62,6 +62,10 @@ module.exports = class Game
     if p?
       @victor = if (p.color == 'black') then 'white' else 'black'
       @tick = ->
+
+    # advance time
+    @stalest_move = @current_tick
+    @current_tick += 1
 
   create_state: ->
     victor: @victor
