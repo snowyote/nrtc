@@ -36,7 +36,8 @@ module.exports = class DisplayGame
         @renderer.image x, y, p.img
         if p.cooldown?
           h = p.cooldown.fraction_remaining()
-          @renderer.rect x-0.5, y-0.5, x+0.5, y+0.5, 'green', h
+          @renderer.rect x-0.5, y-0.5, x+0.5, y-0.5+h, 'red', 0.5
+          @renderer.rect x-0.5, y-0.5+h, x+0.5, y+0.5, 'green', 0.5
     if @game.victor
       @renderer.text @renderer.elt.width/2, @renderer.elt.height/2, "#{@game.victor}\nwins!"
     else if @draggedpiece? && @location?
