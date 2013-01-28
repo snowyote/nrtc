@@ -484,3 +484,6 @@ last moment.  @queued_moves is ephemeral.  So:
 
 @victor, @active_moves, @current_tick
 that's it.
+
+Okay, so now we have a move queue... let's order it and get that out
+of the way.

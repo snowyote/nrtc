@@ -26,8 +26,13 @@ module.exports = class Game
     @active_moves = []
 
   move: (piece, destination_cell, tick = @current_tick) ->
-    # @TODO strict total order
-    (@move_history[tick] ?= []).push [piece, destination_cell]
+    movelist = (@move_history[tick] ? [])
+    movelist.push [piece, destination_cell]
+    movelist = _.sortBy movelist, ([piece, destination_cell]) =>
+      piece_idx = _.indexOf @pieces, piece
+      cell_idx = ((destination_cell.location.y-1) * 8) + (destination_cell.location.x-1)
+      (piece_idx * 64) + cell_idx
+    @move_history[tick] = movelist
     @stalest_move = Math.min @stalest_move, tick
 
   tick: ->
