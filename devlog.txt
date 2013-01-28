@@ -452,3 +452,35 @@ map is basically a structure that looks like the initial layout plus
 Though, actually, this would get complex, having variant data
 structures using array locations... I should refactor layouts to use
 objects, instead.
+
+============ 2013-01-23 ============ state ============= 08:45:04 ==============
+
+outside of the state in Game, we have:
+Cell.piece
+Piece.location
+Piece.in_initial_location
+Piece.cooldown
+
+Hmm, okay, can we invert the dependency so a Piece points to its Cell
+rather than the other way around?
+
+* Board.cell_of(piece) should become piece.cell (but check in_play)
+move_to is weird now
+valid_destination needs to know about game
+
+yikes, this is a large excursion.
+
+Let's, instead, just do the simplest thing possible.  Give game a
+create_state function, a restore_from_state function, and a vector of
+states.
+
+========== 2013-01-28 ========== happy birthday =========== 10:02:11 ===========
+
+Okay, so what was the state in game again?  @board and @pieces are
+covered.  @essential_pieces is invariant.  @victor is actually
+something we care about, because we might 'win' on one side of the
+wire and then discover that the other player moved the king at the
+last moment.  @queued_moves is ephemeral.  So:
+
+@victor, @active_moves, @current_tick
+that's it.

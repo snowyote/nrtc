@@ -62,3 +62,27 @@ module.exports = class Game
     if p?
       @victor = if (p.color == 'black') then 'white' else 'black'
       @tick = ->
+
+  create_state: ->
+    victor: @victor
+    active_moves: _.map @active_moves, _.clone
+    current_tick: @current_tick
+    cells: for x in [0...8]
+      for y in [0...8]
+        c = @at(x, y)
+        if c.piece then _.indexOf @pieces, c.piece else null
+    pieces: for p in @pieces
+      [p.location, p.in_initial_location, p.cooldown]
+
+  restore_from_state: (state) ->
+    @victor = state.victor
+    @active_moves = state.active_moves
+    @current_tick = state.current_tick
+    for x in [0...8]
+      for y in [0...8]
+        c = @at(x, y)
+        sc = state.cells[x][y]
+        c.piece = if sc? then @pieces[sc] else null
+    for pi in [0...state.pieces.length]
+      p = @pieces[pi]
+      [p.location, p.in_initial_location, p.cooldown] = state.pieces[pi]
