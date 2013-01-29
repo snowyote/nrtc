@@ -62,13 +62,15 @@ module.exports = class Game
         cell = @board.cell_of(piece)
         if cell && piece.valid_move(new Move(cell, destination_cell))
           cell.piece = null
-          @active_moves.push [piece, destination_cell]
+          @active_moves.push [@index_of_piece(piece), @index_of_cell(destination_cell)]
           piece.in_initial_location = false
 
     # continue all moves in flight
     finished_moves = []
     for move in @active_moves
-      [piece, destination_cell] = move
+      [pi, ci] = move
+      piece = @piece_of_index(pi)
+      destination_cell = @cell_of_index(ci)
       if piece.location.move_towards(destination_cell.location, VELOCITY)
         captured_piece = destination_cell.piece
         captured_piece.remove_from_play() if captured_piece

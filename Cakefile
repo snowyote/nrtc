@@ -1,6 +1,6 @@
 {exec} = require "child_process"
 
-REPORTER = "spec"
+REPORTER = "list"
 
 task "test", "run tests", ->
   exec "NODE_ENV=test

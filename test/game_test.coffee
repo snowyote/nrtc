@@ -21,11 +21,11 @@ describe 'Game', ->
 
     it 'should order the move queue', ->
       instance.move rook, instance.board.at(8, 1)
-      instance.move rook, instance.board.at(1, 8)
+      instance.move queen, instance.board.at(1, 8)
       first_try = instance.move_history[0]
       instance.move_history[0] = undefined
 
-      instance.move rook, instance.board.at(1, 8)
+      instance.move queen, instance.board.at(1, 8)
       instance.move rook, instance.board.at(8, 1)
       second_try = instance.move_history[0]
       instance.move_history[0] = undefined
@@ -56,7 +56,7 @@ describe 'Game', ->
       dest = instance.board.at(8, 1)
       instance.move rook, dest
       instance.tick()
-      instance.active_moves.should.deep.equal [[rook, dest]]
+      instance.active_moves.should.deep.equal [[0, 7]]
 
     it 'should not activate invalid moves', ->
       dest = instance.board.at(4, 3)
@@ -70,9 +70,9 @@ describe 'Game', ->
       instance.move rook, instance.board.at(8, 1)
       instance.tick()
       instance.current_tick.should.equal 2
-      instance.active_moves.should.deep.equal [[rook, instance.board.at(8, 1)]]
+      instance.active_moves.should.deep.equal [[0, 7]]
 
       instance.move rook, instance.board.at(1, 8), 0
       instance.tick()
       instance.current_tick.should.equal 3
-      instance.active_moves.should.deep.equal [[rook, instance.board.at(1, 8)]]
+      instance.active_moves.should.deep.equal [[0, 56]]

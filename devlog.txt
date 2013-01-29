@@ -515,3 +515,22 @@ seconds after white, and white moves, black won't see white move until
 state of the game... does that include the history?  Ugh, it might.
 If it starts choking, I'll have to turn the history into a ring
 buffer, or work on history compression.
+
+======== 2013-01-29 ======== flattening game state ========= 10:20:17 ==========
+
+cells is already flattened, yay!
+active_moves needs to be flattened
+Piece.create_state... yeah, that too
+
+ok, working on active_moves.
+
+Ugh, running into some weird bug with either mocha or chai.  There are
+a few tests in game_test.coffee that, when they fail, end up
+suppressing error messages for other test failures.  The tests still
+fail, luckily, but I don't get any output about what assertions
+failed.
+
+*** YAK SHAVING WARNING ***
+
+I don't know enough about js to dig into chai.  I'll just fix the test failures and note that if I get that behavior in the future, it's likely something wrong with
+      instance.move_history[0].should.deep.equal [[0, 7]]
