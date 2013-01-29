@@ -1,6 +1,5 @@
 module.exports = class Cooldown
-  constructor: (@initial) ->
-    @ticks_remaining = @initial
+  constructor: (@initial, @ticks_remaining=@initial) ->
 
   tick: ->
     (@ticks_remaining -= 1) <= 0

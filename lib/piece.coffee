@@ -38,9 +38,11 @@ module.exports = class Piece
   in_initial_location: true
 
   create_state: ->
-    [_.clone @location, @in_initial_location, _.clone @cooldown]
+    loc = if @location? then [@location.x, @location.y] else null
+    cd = if @cooldown? then [@cooldown.initial, @cooldown.ticks_remaining] else null
+    [loc, @in_initial_location, cd]
 
   restore_from_state: (state) ->
-    @location = _.clone state[0]
+    @location = if state[0]? then new Location(state[0][0], state[0][1]) else null
     @in_initial_location = state[1]
-    @cooldown = _.clone state[2]
+    @cooldown = if state[2]? then new Cooldown(state[2][0], state[2][1]) else null
