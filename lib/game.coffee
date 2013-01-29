@@ -30,11 +30,14 @@ module.exports = class Game
     movelist = (@move_history[tick] ? [])
     movelist.push [piece, destination_cell]
     movelist = _.sortBy movelist, ([piece, destination_cell]) =>
-      piece_idx = _.indexOf @pieces, piece
-      cell_idx = ((destination_cell.location.y-1) * 8) + (destination_cell.location.x-1)
-      (piece_idx * 64) + cell_idx
+      (@index_of_piece(piece) * 64) + @index_of_cell(destination_cell)
     @move_history[tick] = movelist
     @stalest_move = Math.min @stalest_move, tick
+
+  index_of_piece: (piece) -> _.indexOf @pieces, piece
+  piece_of_index: (index) -> @pieces[index]
+  index_of_cell: (cell) -> ((cell.location.y-1) * 8) + (cell.location.x-1)
+  cell_of_index: (index) -> @board.at((index%8)+1, Math.floor(index/8)+1)
 
   tick: ->
     target_tick = @current_tick + 1
