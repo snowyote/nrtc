@@ -4,6 +4,7 @@ server  = require('http').createServer(app)
 io      = require('socket.io').listen(server)
 Game    = require './lib/game'
 Layouts = require './lib/layouts'
+_       = require 'underscore'
 
 server.listen 3000
 app.use(express.static(__dirname + '/static'));
@@ -11,6 +12,7 @@ app.use(express.static(__dirname + '/static'));
 game = new Game(Layouts.traditional)
 setInterval (-> game.tick()), 66
 
+observers = 0
 sides = ['white', 'black']
 players = []
 
@@ -23,7 +25,7 @@ for_everyone = (cb) ->
     cb side, socket
 
 io.sockets.on 'connection', (socket) ->
-  side = sides.shift()
+  side = sides.shift() or "Observer #{observers += 1}"
   players.push [side, socket]
 
   socket.emit 'init',
@@ -47,3 +49,7 @@ io.sockets.on 'connection', (socket) ->
   socket.on 'chat', (msg) ->
     for_everyone (_, sock) ->
       sock.emit 'chat', side, msg
+
+  socket.on 'disconnect', ->
+    sides.push side
+    players = _.reject players, ([_side, _]) -> _side == side
