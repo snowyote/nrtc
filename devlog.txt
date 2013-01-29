@@ -534,3 +534,17 @@ failed.
 
 I don't know enough about js to dig into chai.  I'll just fix the test failures and note that if I get that behavior in the future, it's likely something wrong with
       instance.move_history[0].should.deep.equal [[0, 7]]
+
+============ 2013-01-29 ============= woot ============= 11:32:33 ==============
+
+Now we're talking!
+
+a couple of @TODOs:
+
+* history compression for a couple of reasons.  serializing state
+  shouldn't involve sending floats around.
+* reconnection
+* shift()ing sides is fragile
+* authenticate moves
+
+Ok, semi-working move authentication!  Hooray!

@@ -43,7 +43,6 @@ module.exports = class Game
     target_tick = @current_tick + 1
     if @stalest_move < @current_tick
       @restore_from_state @states[@stalest_move]
-      @current_tick = @stalest_move
 
     while @current_tick < target_tick
       @states[@current_tick] = @create_state()
@@ -103,7 +102,7 @@ module.exports = class Game
   restore_from_state: (state) ->
     @victor = state.victor
     @active_moves = _.map state.active_moves, _.clone
-    @current_tick = state.current_tick
+    @current_tick = @stalest_move = state.current_tick
     for x in [0...8]
       for y in [0...8]
         c = @board.at(x+1, y+1)
