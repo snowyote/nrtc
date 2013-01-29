@@ -21,7 +21,7 @@ module.exports = class Board
   atloc: (loc) -> @at(loc.x, loc.y)
 
   cell_of: (piece) ->
-    return null unless piece.in_play()
+    return null unless piece && piece.in_play()
     cell = @at(piece.location.x, piece.location.y)
     return null unless cell? && cell.piece == piece
     return cell

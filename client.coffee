@@ -5,11 +5,8 @@ URL         = require 'url'
 dg = new DisplayGame(document.getElementById("board"))
 game = dg.game
 
-Observer.observe game, 'tick', -> $("#curr_tick").text(game.current_tick)
-
 url = URL.parse(window.location)
 socket = io.connect("#{url.protocol}//#{url.host}/")
-side = null
 
 chat = $("#chat")
 $(document).keypress (e) ->
@@ -23,8 +20,10 @@ $(document).keypress (e) ->
 socket.on 'msg', (msg) -> console.log msg; $("#status").append "<br>#{msg}"
 socket.on 'chat', (side, msg) -> $("#status").append "<br>#{side}: '#{msg}'"
 socket.on 'init', ({side: color, state: state}) ->
-  side = color
+  dg.side = color
   game.restore_from_state state
+socket.on 'cancel', (tick, piece_index, cell_index) ->
+  game.cancel_move(tick, piece_index, cell_index)
 socket.on 'move', (tick, piece, cell) ->
   game.move game.piece_of_index(piece), game.cell_of_index(cell), tick
 

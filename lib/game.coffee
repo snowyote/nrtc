@@ -10,7 +10,6 @@ module.exports = class Game
   constructor: (layout) ->
     @board = new Board()
 
-    # omg destructuring-bind... omg...
     @pieces = for {type: typename, location: [x, y]} in layout
       type = Pieces[typename]
       piece = new type()
@@ -33,6 +32,13 @@ module.exports = class Game
       (@index_of_piece(piece) * 64) + @index_of_cell(destination_cell)
     @move_history[tick] = movelist
     @stalest_move = Math.min @stalest_move, tick
+
+  cancel_move: (tick, piece_index, cell_index) ->
+    movelist = (@move_history[tick] ? [])
+    [piece_to_find, cell_to_find] = [@piece_of_index(piece_index), @cell_of_index(cell_index)]
+    movelist = _.reject movelist, ([piece, cell]) -> piece == piece_to_find && cell == cell_to_find
+    @move_history[tick] = movelist
+    @stalest_move = Math.min(@stalest_move, tick)
 
   index_of_piece: (piece) -> _.indexOf @pieces, piece
   piece_of_index: (index) -> @pieces[index]

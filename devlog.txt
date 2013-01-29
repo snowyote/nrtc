@@ -548,3 +548,4 @@ a couple of @TODOs:
 * authenticate moves
 
 Ok, semi-working move authentication!  Hooray!
+Some bug fixes.. eugh..

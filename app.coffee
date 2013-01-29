@@ -35,16 +35,14 @@ io.sockets.on 'connection', (socket) ->
   socket.on 'move', (tick, piece_index, cell_index) ->
     piece = game.piece_of_index(piece_index)
     cell = game.cell_of_index(cell_index)
-    if piece.color == side
+    if piece? && cell? && piece.color == side
       game.move piece, cell, tick
       for_everyone_but side, (_, other_socket) ->
         other_socket.emit 'move', tick, piece_index, cell_index
     else
-      for_everyone (side, sock) ->
-        sock.emit 'msg', "Filtered #{side}'s illegal move #{piece_index}->#{cell_index}"
-        sock.emit 'init',
-          side: side
-          state: game.states[game.current_tick-1]
+      for_everyone (_side, _sock) ->
+        _sock.emit 'msg', "Filtered #{side}'s illegal move #{piece_index}->#{cell_index}"
+      socket.emit 'cancel', tick, piece_index, cell_index
 
   socket.on 'chat', (msg) ->
     for_everyone (_, sock) ->
