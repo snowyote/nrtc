@@ -15,10 +15,16 @@ task "test", "run tests", ->
     console.log output
     throw err if err
 
-task "build", "compile client-side javascript", ->
-  exec "./node_modules/.bin/browserify client.coffee
+compile = (i, o) ->
+  exec "./node_modules/.bin/browserify #{i}
    | ./node_modules/.bin/jsmin
-    > client.js
+    > #{o}
   ",
     (err, output) ->
       throw err if err
+
+task "build", "compile client-side javascript", ->
+  compile "client.coffee", "static/client.js"
+
+task "build_test", "compile the testing stub js", ->
+  compile "client_test.coffee", "client_test.js"

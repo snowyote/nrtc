@@ -10,7 +10,7 @@ module.exports =
       wrapper.__OBSERVED_HOOKS__ = []
       object[name] = wrapper
     object[name].__OBSERVED_HOOKS__.push func
-    
+
   unobserve: (object, name, optional_func) ->
     if optional_func
       object[name].__OBSERVED_HOOKS__ =
