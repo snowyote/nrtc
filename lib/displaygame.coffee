@@ -24,8 +24,11 @@ module.exports = class DisplayGame
     elt.addEventListener 'mousedown', (evt) =>
       @draggedpiece = @game.board.atloc(@location).piece
     elt.addEventListener 'mouseup', (evt) =>
-      @game.move @draggedpiece, @game.board.atloc(@location)
+      @send_move @draggedpiece, @game.board.atloc(@location)
       @draggedpiece = null
+
+  send_move: (piece, cell) ->
+    @game.move piece, cell
 
   draw: () =>
     @game.tick()                # this should be separated, but

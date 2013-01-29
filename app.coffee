@@ -12,6 +12,7 @@ players = []
 io.sockets.on 'connection', (socket) ->
   side = sides.shift()
   socket.emit 'side', side
+  socket.emit 'msg', "Your side is: #{side}"
   players.push [side, socket]
   socket.on 'move', (tick, piece, cell) ->
     for [other_side, other_socket] in players when other_side isnt side
