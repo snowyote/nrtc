@@ -505,3 +505,13 @@ protocol that handles nulls correctly.
 So at this point, I think it's time to fill out Player, but its design
 is going to depend a bit on Socket.IO, so I'll do a little digging
 there first.
+
+============ 2013-01-29 ============= neat ============= 09:38:45 ==============
+
+Well, I have something that kinda works, but the ticks don't match up
+because each side starts their own game.  So if black connects 3
+seconds after white, and white moves, black won't see white move until
+3 seconds later.  On connect we really need to serialize the current
+state of the game... does that include the history?  Ugh, it might.
+If it starts choking, I'll have to turn the history into a ring
+buffer, or work on history compression.

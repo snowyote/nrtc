@@ -9,7 +9,17 @@ url = URL.parse(window.location)
 socket = io.connect("#{url.protocol}//#{url.host}/")
 side = null
 
+chat = $("#chat")
+$(document).keypress (e) ->
+  if e.which == 13
+    msg = chat.val()
+    console.log "About to chat '#{msg}'"
+    socket.emit 'chat', msg
+    chat.val('')
+    chat.focus()
+
 socket.on 'msg', (msg) -> console.log msg; $("#status").append "<br>#{msg}"
+socket.on 'chat', (side, msg) -> $("#status").append "<br>#{side}: '#{msg}'"
 socket.on 'side', (color) -> side = color
 socket.on 'move', (tick, piece, cell) ->
   game.move game.piece_of_index(piece), game.cell_of_index(cell), tick

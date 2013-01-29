@@ -17,3 +17,6 @@ io.sockets.on 'connection', (socket) ->
   socket.on 'move', (tick, piece, cell) ->
     for [other_side, other_socket] in players when other_side isnt side
       other_socket.emit 'move', tick, piece, cell
+  socket.on 'chat', (msg) ->
+    for [_, sock] in players
+      sock.emit 'chat', side, msg
