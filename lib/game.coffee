@@ -50,6 +50,9 @@ module.exports = class Game
     @stalest_move = @current_tick
 
   simulate: ->
+    # if nobody's won yet...
+    return if @victor?
+
     # start all queued moves
     if @move_history[@current_tick]
       for [piece, destination_cell] in @move_history[@current_tick]
