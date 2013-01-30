@@ -1,0 +1,29 @@
+* Meta
+** TODO flesh out package.json
+** TODO cheffify dependencies
+** TODO deploy tools
+** TODO write an 'npath' that is roughly equivalent to 'bundle exec bash'
+** TODO add a README.md!
+** TODO Figure out what the problem was with chai (see 2013-01-29 10:20:17)
+** TODO run tests as a pre-commit hook
+* Framing site
+** TODO Backend storage
+** TODO User model
+   cookie nonce, ELO, opt email
+** TODO challenge other online users
+** TODO should this be a separate application?
+* Game
+** TODO a serialization protocol for state
+** TODO decide what needs refactoring
+   then actually do it
+** TODO Rails-style environment-based config
+   max num games, etc
+** TODO Ready button and countdown
+** TODO History compression
+** TODO reconnection
+** TODO Accept tokens on connect to assign places
+** TODO victory window
+** TODO JUST FRAME DODGE REWARDS
+** TODO SICK PARTICLE FX
+** TODO castling
+** TODO promotion

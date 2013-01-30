@@ -549,3 +549,33 @@ a couple of @TODOs:
 
 Ok, semi-working move authentication!  Hooray!
 Some bug fixes.. eugh..
+
+Will says:
+* it shouldn't register as a win until the window has elapsed
+Justin says:
+* if you have a JUST FRAME dodge then you should get like a cooldown speed bonus on that piece
+
+and SHITTONS OF PARTICLE EFFECTS
+
+============ 2013-01-30 ============= also ============= 09:58:28 ==============
+
+Some infrastructure that would let me set up games and stuff would be
+cool.  But then I would need persistent backend storage.  I could use
+sqlite!  Or ... redis?  Or Mongo, since this is Node?  Thanks
+hipsters!  I am choice paralyzed.
+
+Sqlite for now feels good because then I can swap in postgres or w/e
+later.  SCHEMA TIME
+
+========== 2013-01-30 =========== b-b-but wait =========== 10:02:54 ============
+
+I have a backlog of issues!  I should have an issue tracker!  :(
+Should I use github's?
+
+Jeez, I'm really grateful I have this project.  There are so many
+things I want to play with and I've never had a good reason to use
+them before.
+
+I also want a 'ready' button with a '3..2..1..EXPLOSIONS' countdown.
+So, yeah, time to start keeping track of issues.  I'll start with an
+org-mode doc in the repo for now.
