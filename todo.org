@@ -2,7 +2,7 @@
 ** TODO flesh out package.json
 ** TODO cheffify dependencies
 ** TODO deploy tools
-** TODO write an 'npath' that is roughly equivalent to 'bundle exec bash'
+** DONE write an 'nsh' that is roughly equivalent to 'bundle exec bash'
 ** TODO add a README.md!
 ** TODO Figure out what the problem was with chai (see 2013-01-29 10:20:17)
 ** TODO run tests as a pre-commit hook

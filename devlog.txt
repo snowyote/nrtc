@@ -579,3 +579,16 @@ them before.
 I also want a 'ready' button with a '3..2..1..EXPLOSIONS' countdown.
 So, yeah, time to start keeping track of issues.  I'll start with an
 org-mode doc in the repo for now.
+
+============ 2013-01-31 ============= nsh ============== 10:12:15 ==============
+
+I basically want a bash function (so that export works) that ascends
+to parent directories until it finds package.json, then exports
+$that/node_modules/.bin to the front of path.  I have dirname and
+basename available.
+
+Hmm, I can cheat by using git rev-parse --show-toplevel.
+
+nsh () { export PATH=$(git rev-parse --show-toplevel)/node_modules/.bin:$PATH ; }
+
+I'll just add that to my .profile.
