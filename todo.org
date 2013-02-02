@@ -16,7 +16,7 @@
 ** TODO a serialization protocol for state
 ** TODO decide what needs refactoring
    then actually do it
-** TODO Rails-style environment-based config
+** DONE Rails-style environment-based config
    max num games, etc
 ** TODO Ready button and countdown
 ** TODO History compression
