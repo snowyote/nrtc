@@ -1,5 +1,5 @@
 * Meta
-** TODO flesh out package.json
+** DONE flesh out package.json
 ** TODO cheffify dependencies
 ** TODO deploy tools
 ** DONE write an 'nsh' that is roughly equivalent to 'bundle exec bash'
