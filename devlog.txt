@@ -592,3 +592,135 @@ Hmm, I can cheat by using git rev-parse --show-toplevel.
 nsh () { export PATH=$(git rev-parse --show-toplevel)/node_modules/.bin:$PATH ; }
 
 I'll just add that to my .profile.
+
+============ 2013-02-02 ============ mongo ============= 08:23:12 ==============
+
+why not, eh?
+
+ok, getting the 32-bit version of 2.2.3
+
+============ 2013-02-06 ============ glark ============= 08:41:13 ==============
+
+ok, I need to work out how to communicate between a site (probably
+written in node?) and a game server.  then later on i can work out how
+to have the site decide when to spin up servers.
+
+=========== 2013-02-07 =========== YES TODAY ============ 10:01:37 =============
+
+jeez.
+
+so i can have a little site in node (a single one for now, with
+in-memory tracking of what games are going on, and then i can move
+that to redis or a queue system later) and when a game is desired, it
+will call allocateGame.  In the future this can query a pool of aws
+instances for capacity; in the now it can spin up a game server on
+localhost (using system.exec) and a pipe to communicate to it.
+Instead of using nginx for now, I can spin up the game server on a
+separate port. Since we'll probably want to be able to run multiple
+games per box in aws-land, games (and their socket.io endpoints) will
+be namespaced with a game guid (perhaps the mongo $oid?)
+
+OK, so the biggest unknown here is mongo-in-general, and then
+communicating with processes over pipes.
+
+Hmm, this actually seems kinda shit.  The site process shouldn't start
+the game server process; it should expect it to be started (and then I
+can restart/monitor it externally) and communicate with it across
+another channel.  This way ops can manually spin up/down additional
+servers, or we could have a service allocate them on request.  Using
+pipes to communicate between the processes is not the best idea
+because it'll fall apart as soon as they're run on different machines.
+
+Well, I could use redis pub/sub for this?  Or just poll mongo... for
+simplicity, polling mongo seems like the reasonable thing to do, for
+now.
+
+So the site does
+
+  game_id = guid()
+  game_state = {game_id: game_id, state: 'new'}
+  db.games.save(game_state)
+  do {
+    sleep(100);
+    game_state = db.games.find({game_id: game_id})
+  } while (game_state.endpoint == null)
+
+  send_user_templated_page('client.html', {endpoint: game_state.endpoint})
+
+and the game server does
+
+  setInterval ->
+    queued_games = db.games.find state: 'new'
+    for queued_game in queued_games
+      queued_game.state = 'playing'
+      queued_game.endpoint = guid()
+      new Game(endpoint: queued_game.endpoint)
+      db.games.update {game_id: queued_game.game_id}, queued_game
+  , 100
+
+ok, not too bad.  I'll get mongo running and start making this.
+
+============ 2013-02-08 ============ mongo ============= 10:19:15 ==============
+
+so i need two things in the database: users and games.  and to create
+users i need to set cookies.  let's make users first.  so, let's make
+cookies first!
+
+Yikes, ID generation is a problem.  I can't do User.new() and get
+something back with the ID in it.
+
+Ah, but I can ObjectId() and then create off that.
+
+OK, cool.  I'm actually creating users on requests and putting them
+into mongo.  Neat/cool/yay!  Unfortunately, the user_middleware isn't
+invoked when express.static is invoked, which is kinda shit ... ish.
+I remember at OpenFeint how trying to assign a user on every request
+caused problems.  So maybe for now, we won't create a user until
+req.user() is called, or just have the reaper process that cleans up
+users who haven't done anything after a half hour.
+
+Oh, I was setting up the middleware in the wrong order.  Fixed now.
+
+=========== 2013-02-08 ============ so, cool ============ 11:37:26 =============
+
+next steps:
+
+* namespace api stuff under api?
+* make app angular
+* let the user edit stuff about themselves
+* this mythical cron job that reaps dead users (not so much 'next')
+* add games to db
+* actually link to games
+* play/spectate games
+
+=========== 2013-02-08 =========== well well ============ 15:53:34 =============
+
+okay, i'm starting to get the feel of this, but it needs a little more
+glue.  the current create-a-game method is awful.  Seq helps a lot but
+not enough.
+
+======== 2013-02-10 ======== Some refactoring later ========= 08:35:22 =========
+
+I need to work on tests.  This is way too easily broken.  But... argh,
+I'm so close to having something working.
+
+========== 2013-02-14 =========== tests today? =========== 09:11:03 ============
+
+let's see.
+
+Well, actually, I've made really good progress on tests!
+Unfortunately I'm stuck at a bit of a weirdness with seq.  Minimal case is:
+
+Seq()
+  .par_((next) -> next("An Error"))
+  .par_((next) -> next("Another Error"))
+  .seq_((next, a, b) -> next(null, a + b))
+  .catch((err) -> do_something_with(err))
+
+do_something_with gets called twice.  Which, to be fair, makes sense,
+but I'd really like to pass errors once-and-only-once.
+
+Well, I can null out next with the first error.  That seems kinda
+wrong though.
+
+Ok, mocha --watch also eats up a lot of mongo connections... phew, fixed.

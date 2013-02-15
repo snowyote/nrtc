@@ -3,13 +3,16 @@
   "description": "Node Realtime Chess",
   "version": "0.0.1",
   "private": true,
-  "repository": {
-    "url": "https://github.com/snowyote/nrtc.git"
-  },
-  "author": "Ben Morse <snowyote@gmail.com> (http://ephemeralgarbage.com)",
+  "main": "app.coffee",
   "scripts": {
     "test": "cake test"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/snowyote/nrtc.git"
+  },
+  "author": "Ben Morse <snowyote@gmail.com> (http://ephemeralgarbage.com)",
+  "license": "MIT",
   "dependencies": {
     "coffee-script": "1.4.x",
     "underscore": "1.4.x",
