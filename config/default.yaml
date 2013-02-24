@@ -4,4 +4,4 @@ Top:
     Host: "localhost"
     Port: 27017
     DB: "development"
-    Opts:
+    Opts: null

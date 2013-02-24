@@ -1,12 +1,12 @@
 DisplayGame = require './lib/displaygame'
 Observer    = require './lib/observer'
-URL         = require 'url'
 
 dg = new DisplayGame(document.getElementById("board"))
 game = dg.game
 
-url = URL.parse(window.location)
-socket = io.connect("#{url.protocol}//#{url.host}/")
+url = require('url').parse(String(window.location), true)
+socket = io.connect("#{url.protocol}//#{url.host}/#{url.query.slot_id}")
+socket.emit 'auth', url.query.auth
 
 chat = $("#chat")
 $(document).keypress (e) ->

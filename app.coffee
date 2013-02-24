@@ -1,55 +1,41 @@
-express = require('express')
-app     = express()
-server  = require('http').createServer(app)
-io      = require('socket.io').listen(server)
-Game    = require './lib/game'
-Layouts = require './lib/layouts'
-_       = require 'underscore'
+express    = require('express')
+app        = express()
+server     = require('http').createServer(app)
+io         = require('socket.io').listen(server)
+GameServer = require('./lib/game_server')
+_          = require('underscore')
+Q          = require('q')
+argv       = require('optimist').argv
+database   = require('./lib/database')
+ObjectID   = require('mongodb').ObjectID
+Config     = require('config').Top
 
-server.listen 3000
-app.use(express.static(__dirname + '/static'));
+start = (db) ->
 
-game = new Game(Layouts.traditional)
-setInterval (-> game.tick()), 66
+  port = argv.port || 3000
+  server.listen port
+  my_url = "http://localhost:#{port}" # @TODO from config or otherwise
 
-observers = 0
-sides = ['white', 'black']
-players = []
+  app.use(express.static(__dirname + '/static'));
 
-for_everyone_but = (me, cb) ->
-  for [side, socket] in players when side isnt me
-    cb side, socket
+  # clean up existing slots
+  # @TODO only by me!
+  slots = db.collection("game_slots")
+  Q.ninvoke(slots, 'remove', {}).then ->
+    # create new slots
+    slot_ids = (new ObjectID() for i in [0...Config.NumGames])
 
-for_everyone = (cb) ->
-  for [side, socket] in players
-    cb side, socket
+    # put em in the db
+    slot_promises = for slot_id in slot_ids
+      Q.ninvoke slots, 'insert',
+        _id: slot_id
+        state: 'preparing'
+        url: "#{my_url}/#{slot_id.toHexString()}"
 
-io.sockets.on 'connection', (socket) ->
-  side = sides.shift() or "Observer #{observers += 1}"
-  players.push [side, socket]
+    # start up servers for them
+    Q.all(slot_promises).then ->
+      for slot_id in slot_ids
+        console.log "Listening at #{my_url}/index.html?slot_id=#{slot_id.toHexString()}"
+        new GameServer(slots, io.of("/#{slot_id.toHexString()}", slot_id))
 
-  socket.emit 'init',
-    side: side
-    state: game.states[game.current_tick-1]
-
-  socket.emit 'msg', "Your side is: #{side}"
-
-  socket.on 'move', (tick, piece_index, cell_index) ->
-    piece = game.piece_of_index(piece_index)
-    cell = game.cell_of_index(cell_index)
-    if piece? && cell? && piece.color == side
-      game.move piece, cell, tick
-      for_everyone_but side, (_, other_socket) ->
-        other_socket.emit 'move', tick, piece_index, cell_index
-    else
-      for_everyone (_side, _sock) ->
-        _sock.emit 'msg', "Filtered #{side}'s illegal move #{piece_index}->#{cell_index}"
-      socket.emit 'cancel', tick, piece_index, cell_index
-
-  socket.on 'chat', (msg) ->
-    for_everyone (_, sock) ->
-      sock.emit 'chat', side, msg
-
-  socket.on 'disconnect', ->
-    sides.push side
-    players = _.reject players, ([_side, _]) -> _side == side
+database.open().then(start).fail((err) -> console.log "ohno. #{err}")
