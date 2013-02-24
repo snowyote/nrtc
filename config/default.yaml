@@ -1,0 +1,7 @@
+Top:
+  NumGames: 4
+  Database:
+    Host: "localhost"
+    Port: 27017
+    DB: "development"
+    Opts:
