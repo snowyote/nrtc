@@ -851,12 +851,32 @@ and also maybe we have a cron job for cleaning them up.  have the game
 provide a /checkup route under url that just 200s if it's still
 running.
 
-slot =
-  free: false
-  url: 'http://18.244.0.19:3000/a0ehr0923h4uh'
-  game_id: '09a8ys0b870dafo1'
-
 allright!  so, after all this time... I gotta do work on the game
 server!
 
 ============ 2013-02-24 ============ woohoo ============= 08:06:52 =============
+
+* how do players authenticate themselves.
+
+slot =
+  free: false
+  url: 'http://18.244.0.19:3000/a0ehr0923h4uh'
+  game_id: '09a8ys0b870dafo1'
+  black_token: '08a0v987a0s9v8'
+  white_token: '1kbl5mnb51n253'
+
+? seems legit.  sure, why not.
+
+slot states:
+preparing (game server is setting up)
+open (games can be assigned to this slot)
+assigned (a game has been assigned)
+waiting (game server has allocated a game, waiting for players to connect)
+playing (game is in progress or finishing)
+
+this is hard.  i should use better abstractions.
+i'm hand-interleaving talking to the database when i should be using pub/sub.
+that's ghetto and error-prone.  also i have a bunch of switches on state
+which is clampy, i should dispatch socket messages to a state object.
+also, multiple db promises in flight is asking for sync bugs.  i should queue them
+at the GameServer level.
