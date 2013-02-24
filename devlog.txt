@@ -724,3 +724,139 @@ Well, I can null out next with the first error.  That seems kinda
 wrong though.
 
 Ok, mocha --watch also eats up a lot of mongo connections... phew, fixed.
+
+============ 2013-02-16 ============= okay ============= 14:56:28 ==============
+
+two things i learned today:
+
+* cors kinda sucks.  chrome at least will always hit the host on the
+  default port to do its OPTIONS request
+
+* i need to factor out some stuff so that i can have restful routes
+  for my models and that shouldn't be too hard.
+
+====== 2013-02-18 ======= halfway through refactoring ======== 13:23:07 ========
+
+Having trouble testing promises.  I want to do this:
+
+      Game.pmake(alice.id, alice.id).
+        then((game) -> throw new Error "Succeeded unexpectedly").
+        fail((err) -> err.message.should.be "Don't play with yourself").
+        finally(-> done())
+
+But unfortunately the 'should' in the fail block gets caught by Q, so
+it's not registered as an assertion failure.
+
+I tried using mocha-as-promised but simply including it caused a test
+to fail (it calls done() multiple times) where it had previously
+succeeded.  Gonna check back on that when I get back from this walk.
+
+======== 2013-02-18 ========= ok promises working ========== 16:10:09 ==========
+
+jeez i've punted stuff for long enough.  Time to get an actual site
+working.  Back to angular.
+
+============ 2013-02-20 ============= okay ============= 17:10:34 ==============
+
+cool i have -something- working.  now i gotta actually vaguely think
+out the site.
+
+so something like this
+
+title!!!!!!!!!!     user
+------------------------
+new's    bro's    game's   (tabs)
+
+
+
+news looks like:
+
+shit dog guess what i'm a webiste
+2013-02-20 18:33:39 by ben
+
+bros looks like:
+
+find bro by email:  _______________
+online bros:
+* Fred
+* Daphne
+offline bros:
+* Shaggy (last seen 1922)
+
+if you click on a bro it takes you to their profile
+profile looks like
+
+(user.avatar)
+user.name
+online | last seen $date
+ELO score: 1687
+Add|Remove Bro
+[if bro]
+  Challenge/Accept Challenge/Resume Game
+
+games looks like:
+Active Games                  | Game History
+Fred challenges u             | vs. Daphne (green for victory, red for defeat), July 92nd
+vs. Shaggy (started Nov 42nd) |
+
+clicking on a challenge allows you to accept or reject
+clicking on a game in history goes to watch a replay
+clicking on an active game opens it up
+
+=========== 2013-02-21 =========== holy carp ============ 08:39:28 =============
+
+I should have been doing the whole thing in Meteor all along.
+
+for later: https://github.com/dannycoates/node-inspector
+
+where i'm stuck: i want to test where someone's online, which is
+u.profile.online, but queries seem to only let me compare the entirety
+of profile.  not sure i dig mongo.  (or, my schema.  but w/e.)
+
+NO I'M DUMB, MONGO IS GREAT
+db.users.findOne({"profile.online": true})
+
+============= 2013-02-23 ============= ok ============== 18:55:53 ==============
+
+well, i can't findAndModify, so this is kinda shit, but I can work on
+that later.  Now I actually gotta figure out how to get the game into
+the server.  fffff
+
+========= 2013-02-24 ========== how do i do that ========== 07:53:18 ===========
+
+in this case i'm starting to wonder if i should port the game to
+meteor, since the reason for separating stuff out to begin with was
+for ops/perf reasons, and ops/perf of meteor is already ... eh
+... ????  maybe i'm presuming too much there.
+
+But forcing me to learn how to get services to interoperate is
+actually i think good for me.
+
+so what i'd like is to have them communicate, maybe through mongo
+since it already exists, as to what games are scheduled.
+
+user tries to enter a game by clicking on a link
+server is like hmm, ok, you want game G, eh?  lemme spin that up for you.
+it finds a free slot S:
+
+  c = MongoClient.collection('game-slots')
+  slot = c.find({game: game_id})
+  slot |= c.findAndModify({free: true}, {free: false, game: game_id})
+  return res.send(500, "no free slots") unless slot?
+  res.redirect(slot.url + "?color=" this_players_color)
+
+meanwhile, the game process has provided these slots by inserting them
+at startup with free:true, it should hopefully remove them at shutdown
+and also maybe we have a cron job for cleaning them up.  have the game
+provide a /checkup route under url that just 200s if it's still
+running.
+
+slot =
+  free: false
+  url: 'http://18.244.0.19:3000/a0ehr0923h4uh'
+  game_id: '09a8ys0b870dafo1'
+
+allright!  so, after all this time... I gotta do work on the game
+server!
+
+============ 2013-02-24 ============ woohoo ============= 08:06:52 =============
