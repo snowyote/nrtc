@@ -3,7 +3,7 @@
 ** TODO cheffify dependencies
 ** TODO deploy tools
 ** DONE write an 'nsh' that is roughly equivalent to 'bundle exec bash'
-** TODO add a README.md!
+** DONE add a README.md!
 ** TODO Figure out what the problem was with chai (see 2013-01-29 10:20:17)
 ** TODO run tests as a pre-commit hook
 * Framing site
