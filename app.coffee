@@ -9,12 +9,17 @@ argv       = require('optimist').argv
 database   = require('./lib/database')
 ObjectID   = require('mongodb').ObjectID
 Config     = require('config').Top
+mubsub     = require('mubsub')
 
 start = (db) ->
 
   port = argv.port || 3000
   server.listen port
   my_url = "http://localhost:#{port}" # @TODO from config or otherwise
+
+  dbu = "mongodb://#{Config.Database.Host}:#{Config.Database.Port}/#{Config.Database.DB}"
+  msclient = mubsub(dbu)
+  channel = client.channel 'slots_ps'
 
   app.use(express.static(__dirname + '/static'));
 
@@ -36,6 +41,6 @@ start = (db) ->
     Q.all(slot_promises).then ->
       for slot_id in slot_ids
         console.log "Listening at #{my_url}/index.html?slot_id=#{slot_id.toHexString()}"
-        new GameServer(slots, io.of("/#{slot_id.toHexString()}", slot_id))
+        new GameServer(slots, channel, io.of("/#{slot_id.toHexString()}", slot_id))
 
 database.open().then(start).fail((err) -> console.log "ohno. #{err}")

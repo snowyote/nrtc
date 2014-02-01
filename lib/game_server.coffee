@@ -3,7 +3,10 @@ Layouts = require './layouts'
 _       = require 'underscore'
 
 module.exports = class GameServer
-  constructor: (slots, root_socket, slot_id) ->
+  constructor: (slots, channel, root_socket, slot_id) ->
+    channel.subscribe {slot: slot_id}, (doc) =>
+      console.log "burf: #{doc}"
+
     slots.findOne {_id: slot_id}, (err, slot) ->
       game = new Game(Layouts.traditional)
       setInterval (-> game.tick()), 66

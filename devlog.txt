@@ -880,3 +880,24 @@ that's ghetto and error-prone.  also i have a bunch of switches on state
 which is clampy, i should dispatch socket messages to a state object.
 also, multiple db promises in flight is asking for sync bugs.  i should queue them
 at the GameServer level.
+
+============ 2013-02-24 ============= duh ============== 12:24:08 ==============
+
+mubsub (the mongo pubsub thing i am using) uses _id ordering for
+dates, which basically assumes only one publisher per channel (unless
+i'm missing something).  What I really want is a persistent document
+that can notify subscribers of changes to it.  So, craps.
+
+ah, wait, objectid on the actual mongo server.  that makes more sense.
+But, at this route, I could almost use websockets between the game
+server and knifefight.
+
+========== 2013-02-25 ========== k got an idea =========== 07:33:12 ============
+
+i think the last idea i had before going to bed is building a layer on
+top of mubsub where the messages published to the channel are just ids
+of objects that changed and you can subscribe to an object which means
+that when its id is published to the channel, it will automatically
+fetch the object and then just notify you with the new object.
+
+i'll call it docwatch (hurp)
